@@ -2,6 +2,7 @@
 
 set -e
 
+MICHAEL=$PWD/michael
 DISK=$PWD/qemu-setup/illumos-disk.img
 POOL=armpool
 MNT=/mnt
@@ -139,6 +140,8 @@ rm -f $SVCCFG_REPOSITORY
 # If this worked it would be lovely, but it doesn't yet
 # because it can only create ufs/cpio archives, and we can only boot from hsfs
 #sudo illumos-gate/usr/src/cmd/boot/scripts/create_ramdisk -R $ROOT -p aarch64 -f ufs-nocompress
+
+cp $ROOT/platform/armv8/boot_archive $MICHAEL/boot_archive
 
 sudo zpool set bootfs=$POOL/$ROOTFS $POOL
 sudo zpool set cachefile="" $POOL

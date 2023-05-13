@@ -1,0 +1,18 @@
+To get into an incremental build environment.
+  cd illumos-gate
+  usr/src/tools/scripts/bldenv -T aarch64 ../env/aarch64
+
+# on when it doesn't exist
+illumos-gate/usr/src/cmd/boot/scripts/root_archive.ksh unpack qemu-setup/boot_archive michael/boot_archive.dir
+# update it - add modules as we need them
+cp illumos-gate/proto/root_aarch64/platform/ARM,sbsa/kernel/aarch64/unix.shim michael/unix.shim
+cp illumos-gate/proto/root_aarch64/platform/ARM,sbsa/kernel/aarch64/unix michael/unix
+cp michael/unix.shim michael/unix michael/boot_archive.dir/platform/ARM,sbsa/kernel/aarch64/
+# repack it
+illumos-gate/usr/src/cmd/boot/scripts/root_archive.ksh pack michael/boot_archive michael/boot_archive.dir
+
+# on the other side
+scp michael@192.168.1.86:/build/arm64-gate/michael/unix.shim esp_disk/platform/ARM,sbsa/kernel/aarch64/unix.shim && \
+  scp michael@192.168.1.86:/build/arm64-gate/michael/unix esp_disk/platform/ARM,sbsa/kernel/aarch64/unix && \
+  scp michael@192.168.1.86:/build/arm64-gate/michael/boot_archive esp_disk/platform/armv8/boot_archive
+./runit.sh
