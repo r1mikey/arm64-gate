@@ -14,7 +14,19 @@ out/
 **/*.so
 **/*.so.*
 
+qemu-efi-setup/illumos-disk.img
+qemu-efi-setup/boot/
 qemu-setup/illumos-disk.img
 qemu-setup/inetboot.bin
+qemu-setup/mike.dtb
 rpi4-setup/
 
+michael/boot_archive
+michael/boot_archive.dir
+michael/boot_archive.gz
+michael/genunix
+michael/rootnex
+michael/gicv3
+michael/unix
+michael/unix.shim
+michael/efivars.fd

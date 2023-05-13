@@ -1,6 +1,6 @@
 define load-kernel-modules
   # Skip 'unix', we loaded that ourselves to find 'modules'
-  set $_module = modules->mod_next
+  set $_module = ((modctl_t *)modules)->mod_next
   while $_module != &modules
     set $_file = $_module->mod_filename
     if $_module->mod_loaded
@@ -14,5 +14,12 @@ define load-kernel-modules
 end
 
 
+# file illumos-gate/usr/src/psm/stand/boot/aarch64/sbsa/unix.shim
+# file illumos-gate/proto/root_aarch64/platform/ARM,sbsa/kernel/aarch64/unix
 file illumos-gate/usr/src/psm/stand/boot/aarch64/virt/inetboot.out
-file illumos-gate/proto/root_aarch64/platform/QEMU,virt/kernel/aarch64/unix
+# file illumos-gate/proto/root_aarch64/platform/QEMU,virt/kernel/aarch64/unix
+
+layout regs
+layout asm
+b _start
+target remote localhost:1234

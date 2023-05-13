@@ -12,6 +12,7 @@ if [[ $(zonename) != global ]]; then
 	exit 2
 fi
 
+MICHAEL=$PWD/michael
 DATASET="$(zfs list -Ho name / | cut -d/ -f1)/braich_image"
 ROOT=/braich_image
 WORKDIR=$PWD
@@ -173,6 +174,7 @@ rm -f $SVCCFG_REPOSITORY
 
 	sudo touch ./boot/solaris/timestamp.cache
 )
+cp $ROOT/platform/armv8/boot_archive $MICHAEL/boot_archive
 
 sudo zfs snapshot $DATASET@image
 mkdir -p out
