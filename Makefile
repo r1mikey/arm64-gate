@@ -366,10 +366,13 @@ $(PWD)/out/illumos.zfs: $(STAMPS)/illumos-stamp
 qemu-disk: $(PWD)/out/illumos.zfs
 	ksh tools/build_qemu.sh --efi
 
+qemu-efi-disk: $(PWD)/out/illumos.zfs
+	ksh tools/build_qemu_efi.sh
+
 rpi4-disk: $(PWD)/out/illumos.zfs
 	ksh tools/build_rpi4.sh --efi
 
-disk: qemu-disk rpi4-disk
+disk: qemu-disk qemu-efi-disk rpi4-disk
 
 $(BUILDS):
 	mkdir -p $@

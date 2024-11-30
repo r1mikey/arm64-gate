@@ -14,6 +14,9 @@ out/
 **/*.so
 **/*.so.*
 
+qemu-efi-setup/*.fd
+qemu-efi-setup/illumos-disk.img
+qemu-efi-setup/boot
 qemu-setup/illumos-disk.img
 qemu-setup/inetboot.bin
 rpi4-setup/
