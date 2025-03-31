@@ -89,6 +89,8 @@ DOWNLOADS=			\
 	$(SYSROOT_PUBLISHER)	\
 	perl			\
 	rpi-firmware		\
+	edk2-rpi4		\
+	edk2-qemu-sbsa-bins	\
 	u-boot
 
 PERLVER=5.44.0
@@ -133,6 +135,11 @@ download-arm-trusted-firmware: $(SRCS)
 	      https://github.com/ARM-software/arm-trusted-firmware \
 	      $(SRCS)/arm-trusted-firmware
 
+download-edk2-qemu-sbsa-bins: $(SRCS)
+	git clone --depth=1 --branch main \
+	    https://github.com/r1mikey/edk2-qemu-sbsa-bins \
+	    $(SRCS)/edk2-qemu-sbsa-bins
+
 download-barn: $(SRCS)
 	curl -fLo $(SRCS)/barn.c \
 	    https://github.com/omniosorg/kayak/raw/master/src/barn.c
@@ -143,6 +150,14 @@ download-rpi-firmware: $(ARCHIVES) $(SRCS)
 	    https://github.com/raspberrypi/firmware/archive/refs/tags/$(RPIFWVER).tar.gz
 	/bin/tar -xf $(ARCHIVES)/firmware-$(RPIFWVER).tar.gz -C $(SRCS) \
 	    firmware-$(RPIFWVER)/boot
+
+RPIUEFIVER=v1.41
+download-edk2-rpi4: $(ARCHIVES) $(SRCS)
+	wget -O $(ARCHIVES)/RPi4_UEFI_Firmware_$(RPIUEFIVER).zip \
+	    https://github.com/pftf/RPi4/releases/download/$(RPIUEFIVER)/RPi4_UEFI_Firmware_$(RPIUEFIVER).zip
+	rm -rf $(SRCS)/firmware-edk2-rpi4
+	unzip -d $(SRCS)/firmware-edk2-rpi4 \
+	    $(ARCHIVES)/RPi4_UEFI_Firmware_$(RPIUEFIVER).zip
 
 # XXXARM: We specify what we extract, because the release tarball contains a
 # GNU tar-ism we don't understand.
@@ -389,6 +404,11 @@ qemu-disk: $(PWD)/out/illumos.zfs
 rpi4-disk: $(PWD)/out/illumos.zfs
 	ksh tools/build_rpi4.sh
 
+rpi4-edk2-disk: $(PWD)/out/illumos.zfs
+	ksh tools/build_rpi4_edk2.sh
+
+# we intentionally don't add rpi4-edk2-disk yet, since it is not yet
+# universally useful
 disk: qemu-disk rpi4-disk
 
 $(BUILDS):
