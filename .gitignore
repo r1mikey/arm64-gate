@@ -18,5 +18,6 @@ qemu-setup/illumos-disk.img
 qemu-setup/inetboot.bin
 qemu-setup/testsuite.log
 qemu-setup/u-boot.bin
+qemu-setup/*.fd
 rpi4-setup/
 rpi4-edk2-setup/
