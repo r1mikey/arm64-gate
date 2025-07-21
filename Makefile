@@ -85,7 +85,6 @@ DOWNLOADS=			\
 	binutils-gdb		\
 	dtc			\
 	gcc			\
-	illumos-gate		\
 	$(SYSROOT_PUBLISHER)	\
 	perl			\
 	rpi-firmware		\

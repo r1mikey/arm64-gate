@@ -1,9 +1,9 @@
 #!/bin/sh
 
-QEMU_SCRIPT_MACHINE="${QEMU_SCRIPT_MACHINE:-virt,virtualization=on,gic-version=3}"
+QEMU_SCRIPT_MACHINE="${QEMU_SCRIPT_MACHINE:-virt}"
 QEMU_SCRIPT_MEMORY="${QEMU_SCRIPT_MEMORY:-6g}"
 QEMU_SCRIPT_NCPU="${QEMU_SCRIPT_NCPU:-4}"
-QEMU_SCRIPT_CPU="${QEMU_SCRIPT_CPU:-neoverse-n1}"
+QEMU_SCRIPT_CPU="${QEMU_SCRIPT_CPU:-neoverse-n2}"
 QEMU_SCRIPT_ACCEL="${QEMU_SCRIPT_ACCEL:-tcg,thread=multi}"
 
 vnic=braich0
@@ -13,7 +13,6 @@ mac=`dladm show-vnic -p -o MACADDRESS $vnic | \
     tr '[:lower:]' '[:upper:]'`
 
 exec qemu-system-aarch64 \
-    -s \
     -nographic \
     -machine "${QEMU_SCRIPT_MACHINE}" \
     -accel "${QEMU_SCRIPT_ACCEL}" \
@@ -21,11 +20,17 @@ exec qemu-system-aarch64 \
     -smp cores="${QEMU_SCRIPT_NCPU}" \
     -cpu "${QEMU_SCRIPT_CPU}" \
     -bios u-boot.bin \
+    \
+    -device usb-ehci,id=ehci \
+      -drive if=none,id=stick,format=raw,file=../usb-image/bootable.usb \
+      -device usb-storage,bus=ehci.0,drive=stick,removable=on \
+    \
     -netdev vnic,ifname=braich0,id=net0 \
     -device virtio-net-device,netdev=net0,mac=${mac} \
+    "$@"
+
     -drive file=$PWD/illumos-disk.img,format=raw,id=hd0,if=none \
     -device virtio-blk-device,drive=hd0 \
-    "$@"
 
       -device piix4-usb-uhci,id=xhci,bus=rp03,addr=00.0 \
         -device usb-kbd,bus=xhci.0 \
