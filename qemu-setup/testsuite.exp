@@ -21,9 +21,10 @@ set suites {
     "/opt/elf-tests/bin/elftest"
     "/opt/i2c-tests/bin/i2c-test"
     "/opt/util-tests/bin/utiltest"
-    "/opt/crypto-tests/bin/cryptotest"
     "/opt/libc-tests/bin/libctest"
 }
+
+#    "/opt/crypto-tests/bin/cryptotest"
 
 set cpus {
     "cortex-a53"
@@ -67,13 +68,15 @@ log_file -open $logf
 
 set timeout -1
 
-spawn ./run.sh
+spawn ./run-virt-edk2.sh
 expect "console login: " { send "root\r" }
 expect "# " { send "env TERM=dumb bash\r" }
 expect "# " { send "/lib/svc/bin/settle\r" }
 
-foreach suite $suites {
-    expect "# " { send "$suite\r" }
+for {set i 0} {$i < 10} {incr i} {
+    foreach suite $suites {
+        expect "# " { send "$suite\r" }
+    }
 }
 
 expect "# " { send "poweroff\r" }

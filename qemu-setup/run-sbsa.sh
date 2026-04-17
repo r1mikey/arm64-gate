@@ -1,7 +1,7 @@
 #!/bin/sh -x
 
-QEMU_SCRIPT_MEMORY="${QEMU_SCRIPT_MEMORY:-4g}"
-QEMU_SCRIPT_NCPU="${QEMU_SCRIPT_NCPU:-4}"
+QEMU_SCRIPT_MEMORY="${QEMU_SCRIPT_MEMORY:-2g}"
+QEMU_SCRIPT_NCPU="${QEMU_SCRIPT_NCPU:-2}"
 QEMU_SCRIPT_CPU="${QEMU_SCRIPT_CPU:-neoverse-n1}"
 QEMU_SCRIPT_ACCEL="${QEMU_SCRIPT_ACCEL:-tcg,thread=multi}"
 
@@ -47,6 +47,7 @@ exec qemu-system-aarch64 \
     \
     \
     "$@"
+
 
     \
     -device pcie-root-port,id=rp01,bus=pcie.0,addr=01.0,port=2,chassis=1 \

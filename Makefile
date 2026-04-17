@@ -120,7 +120,8 @@ download-binutils-gdb: $(SRCS)
 	    https://github.com/richlowe/binutils-gdb $(SRCS)/binutils-gdb
 
 download-illumos-gate: FRC
-	git clone -b arm64-gate https://github.com/richlowe/illumos-gate
+	# git clone -b arm64-gate https://github.com/richlowe/illumos-gate
+	true
 
 UBOOTVER=v2025.10
 download-u-boot: $(SRCS)

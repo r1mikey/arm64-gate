@@ -25,12 +25,18 @@ copyin platform/armv8/kernel/drv/aarch64/efifb
 copyin platform/armv8/kernel/misc/aarch64/gfx_private
 copyin platform/armv8/kernel/drv/aarch64/gicthree
 copyin platform/armv8/kernel/drv/aarch64/gictwo
+copyin platform/armv8/kernel/drv/aarch64/gicv2m
+copyin platform/armv8/kernel/drv/aarch64/gicv3_its
 copyin platform/armv8/kernel/drv/aarch64/ns16550a
 copyin platform/armv8/kernel/misc/aarch64/pci_prd
 copyin kernel/misc/aarch64/pcicfg
 copyin platform/armv8/kernel/misc/aarch64/pcie
+copyin kernel/drv/aarch64/efidev
 copyin kernel/drv/aarch64/pcieb
 copyin platform/armv8/kernel/misc/aarch64/pcierc
+copyin kernel/misc/aarch64/pcierc
+
+copyin platform/armv8/kernel/tod/aarch64/efitod
 copyin platform/armv8/kernel/tod/aarch64/pl03one
 copyin platform/armv8/kernel/misc/aarch64/platmod
 copyin platform/armv8/kernel/drv/aarch64/rootnex
