@@ -23,3 +23,12 @@ qemu-setup/*.fd
 rpi4-setup/
 rpi4-edk2-setup/
 usb-image/
+
+qemu-setup/dummy.img
+qemu-setup/mikey-modified.dtb
+qemu-setup/mikey.dtb
+qemu-setup/mikey.dts
+qemu-setup/run-crazy-topo.sh
+qemu-setup/vm.uuid
+run.log
+patches/u-boot.patch.mike

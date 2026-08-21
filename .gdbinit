@@ -19,3 +19,4 @@ define devinfo
 end
 
 file illumos-gate/proto/root_aarch64/platform/ARMH,sbbr/kernel/aarch64/unix
+# file illumos-gate/proto/root_aarch64/platform/armv8/kernel/aarch64/unix

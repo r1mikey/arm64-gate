@@ -1,12 +1,20 @@
-#!/bin/sh
+#!/bin/sh -x
 
-QEMU_SCRIPT_MACHINE="${QEMU_SCRIPT_MACHINE:-virt,gic-version=3,virtualization=on}"
-QEMU_SCRIPT_MEMORY="${QEMU_SCRIPT_MEMORY:-2g}"
-QEMU_SCRIPT_NCPU="${QEMU_SCRIPT_NCPU:-2}"
+QEMU_SCRIPT_MACHINE="${QEMU_SCRIPT_MACHINE:-virt,gic-version=3,virtualization=on,virtio-mmio-transports=0}"
+# QEMU_SCRIPT_MACHINE="${QEMU_SCRIPT_MACHINE:-virt,gic-version=3,msi=gicv2m,virtualization=on,virtio-mmio-transports=0}"
+# QEMU_SCRIPT_MACHINE="${QEMU_SCRIPT_MACHINE:-virt,gic-version=2,virtualization=on,virtio-mmio-transports=0}"
+QEMU_SCRIPT_MEMORY="${QEMU_SCRIPT_MEMORY:-4g}"
+QEMU_SCRIPT_NCPU="${QEMU_SCRIPT_NCPU:-4}"
 QEMU_SCRIPT_CPU="${QEMU_SCRIPT_CPU:-neoverse-n1}"
 QEMU_SCRIPT_ACCEL="${QEMU_SCRIPT_ACCEL:-tcg,thread=multi}"
 
 vnic=braich0
+
+if [ ! -f vm.uuid ]; then
+	uuidgen > vm.uuid
+fi
+
+QEMU_UUID=$(cat vm.uuid)
 
 if [ ! -f edk2-aarch64-code.fd ]; then
     if [ ! -f /opt/ooce/qemu/share/qemu/edk2-aarch64-code.fd ]; then
@@ -25,22 +33,34 @@ mac=`dladm show-vnic -p -o MACADDRESS $vnic | \
     /bin/awk -F: '{printf("%02s:%02s:%02s:%02s:%02s:%02s",$1,$2,$3,$4,$5,$6)}' | \
     tr '[:lower:]' '[:upper:]'`
 
+#    -device pci-serial
+
 exec qemu-system-aarch64 \
     -s \
     -nographic \
+    -uuid "${QEMU_UUID}" \
     -machine "${QEMU_SCRIPT_MACHINE}" \
+    \
+    -m "${QEMU_SCRIPT_MEMORY}" \
+    -smp "${QEMU_SCRIPT_NCPU}" \
+    \
     -accel "${QEMU_SCRIPT_ACCEL}" \
-    -m ${QEMU_SCRIPT_MEMORY} \
-    -smp cores="${QEMU_SCRIPT_NCPU}" \
     -cpu "${QEMU_SCRIPT_CPU}" \
     -drive if=pflash,format=raw,file=eficode.fd,readonly=on \
     -drive if=pflash,format=raw,file=efivars.fd \
     -drive file=illumos-disk.img,format=raw,id=hd0,if=none \
-    -device virtio-blk-device,drive=hd0 \
+    -device virtio-blk-pci,drive=hd0,bootindex=1 \
     -netdev vnic,ifname=braich0,id=net0 \
-    -device virtio-net-device,netdev=net0,mac=${mac} \
+    -device virtio-net-pci,netdev=net0,mac=${mac} \
     \
     "$@"
+
+    -device pcie-root-port,id=hp0,slot=3,chassis=3,bus=pcie.0 \
+    \
+
+    -m ${QEMU_SCRIPT_MEMORY} \
+    -smp cores="${QEMU_SCRIPT_NCPU}" \
+
     \
     -device pcie-root-port,id=rp01,bus=pcie.0,addr=01.0,port=2,chassis=1 \
       -device pcie-pci-bridge,id=ppb0,bus=rp01,addr=00.0 \

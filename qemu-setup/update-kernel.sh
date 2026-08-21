@@ -15,12 +15,18 @@ pfexec zfs set mountpoint=/mnt armpool/ROOT/braich
 pfexec zfs mount armpool/ROOT/braich
 
 copyin kernel/aarch64/genunix
+copyin kernel/misc/aarch64/acpica
 copyin platform/armv8/kernel/misc/aarch64/acpidev
+copyin platform/armv8/kernel/misc/aarch64/pcc
+copyin platform/armv8/kernel/misc/aarch64/cppc
 copyin platform/armv8/kernel/drv/aarch64/acpinex
 copyin platform/armv8/kernel/drv/aarch64/arm_gtmr
+copyin platform/armv8/kernel/drv/aarch64/acpiged
+copyin platform/armv8/kernel/drv/aarch64/acpipwrbtn
+copyin platform/armv8/kernel/drv/aarch64/cpudrv
+copyin platform/armv8/kernel/misc/aarch64/cpuidle
 copyin kernel/misc/aarch64/bootdev
 copyin platform/armv8/kernel/dacf/aarch64/consconfig_dacf
-copyin platform/armv8/kernel/drv/aarch64/ecam
 copyin platform/armv8/kernel/drv/aarch64/efifb
 copyin platform/armv8/kernel/misc/aarch64/gfx_private
 copyin platform/armv8/kernel/drv/aarch64/gicthree
@@ -28,28 +34,49 @@ copyin platform/armv8/kernel/drv/aarch64/gictwo
 copyin platform/armv8/kernel/drv/aarch64/gicv2m
 copyin platform/armv8/kernel/drv/aarch64/gicv3_its
 copyin platform/armv8/kernel/drv/aarch64/ns16550a
+copyin kernel/drv/aarch64/asy
+copyin kernel/drv/aarch64/efidev
+
+copyin kernel/drv/aarch64/ecam
 copyin platform/armv8/kernel/misc/aarch64/pci_prd
+copyin kernel/misc/aarch64/pcierc
 copyin kernel/misc/aarch64/pcicfg
 copyin platform/armv8/kernel/misc/aarch64/pcie
-copyin kernel/drv/aarch64/efidev
 copyin kernel/drv/aarch64/pcieb
-copyin platform/armv8/kernel/misc/aarch64/pcierc
-copyin kernel/misc/aarch64/pcierc
+copyin kernel/misc/aarch64/hpcsvc
+copyin kernel/misc/aarch64/pcihp
+copyin kernel/drv/aarch64/pci_pci
+copyin platform/RaspberryPi,4/kernel/drv/aarch64/bcm2711_pcie
+copyin platform/RaspberryPi,4/kernel/drv/aarch64/bcm2711_pcie_msi
+
+copyin kernel/drv/aarch64/viommionex
+copyin kernel/drv/aarch64/vioblk
+copyin kernel/drv/aarch64/vioif
+copyin kernel/drv/aarch64/vio9p
+copyin kernel/drv/aarch64/viorand
+copyin kernel/drv/aarch64/xhci
+copyin kernel/misc/aarch64/usba
+
+copyin kernel/drv/aarch64/e1000g
 
 copyin platform/armv8/kernel/tod/aarch64/efitod
 copyin platform/armv8/kernel/tod/aarch64/pl03one
 copyin platform/armv8/kernel/misc/aarch64/platmod
 copyin platform/armv8/kernel/drv/aarch64/rootnex
+
 copyin platform/RaspberryPi,4/kernel/drv/aarch64/bcm2711_emmctwo
 copyin platform/RaspberryPi,4/kernel/drv/aarch64/bcm2711_genet
-copyin platform/RaspberryPi,4/kernel/drv/aarch64/bcm2711_pcie
 copyin platform/RaspberryPi,4/kernel/drv/aarch64/bcm2711_sensors
 copyin platform/RaspberryPi,4/kernel/misc/aarch64/platmod
 copyin platform/ARMH,sbbr/kernel/aarch64/unix
+copyin platform/ARMH,sbbr/kernel/drv/aarch64/cpudrv
 copyin platform/ARMH,sbbr/kernel/misc/aarch64/platmod
+copyin platform/ARMH,sbbr/kernel/misc/aarch64/pcie
 copyin platform/armv8/kernel/drv/aarch64/simple-bus
 copyin platform/armv8/kernel/aarch64/unix
 copyin platform/QEMU,virt/kernel/misc/aarch64/platmod
+
+copyin kernel/drv/aarch64/llc1
 
 pfexec touch /mnt/reconfigure
 
